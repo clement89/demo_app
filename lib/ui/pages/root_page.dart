@@ -1,9 +1,9 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:demo_app/providers/root_provider.dart';
-import 'package:demo_app/theme/colors.dart';
-import 'package:demo_app/views/add_item_page.dart';
-import 'package:demo_app/views/home_page.dart';
-import 'package:demo_app/views/sales_page.dart';
+import 'package:demo_app/business_logic/view_models/root_viewmodel.dart';
+import 'package:demo_app/ui/pages/add_item_page.dart';
+import 'package:demo_app/ui/pages/home_page.dart';
+import 'package:demo_app/ui/pages/sales_page.dart';
+import 'package:demo_app/ui/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -17,15 +17,17 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _rootProvider = Provider.of<RootProvider>(context, listen: false);
+    final _rootViewModel = Provider.of<RootViewModel>(context, listen: false);
 
-    return Consumer<RootProvider>(builder: (context, provider, child) {
+    return Consumer<RootViewModel>(builder: (context, provider, child) {
       return Scaffold(
-        body: IndexedStack(
-          index: _rootProvider.pageIndex,
-          children: pages,
+        body: SafeArea(
+          child: IndexedStack(
+            index: _rootViewModel.pageIndex,
+            children: pages,
+          ),
         ),
-        bottomNavigationBar: getFooter(_rootProvider),
+        bottomNavigationBar: getFooter(_rootViewModel),
         floatingActionButton: FloatingActionButton(
             onPressed: () {
               // selectedTab(4);
@@ -49,7 +51,7 @@ class RootPage extends StatelessWidget {
     });
   }
 
-  Widget getFooter(RootProvider provider) {
+  Widget getFooter(RootViewModel provider) {
     List<IconData> iconItems = [
       Ionicons.md_home,
       Ionicons.md_stats,
