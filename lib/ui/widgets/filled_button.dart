@@ -1,4 +1,3 @@
-import 'package:demo_app/ui/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,30 +10,25 @@ class FilledButton extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return SizedBox(
-      width: size.width * 0.9,
+    return Center(
       child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-            red,
-          ),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-              side: BorderSide(color: red),
-            ),
-          ),
-        ),
         onPressed: onClickAction,
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25,
-              fontWeight: FontWeight.w500,
+        style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25))),
+        child: Ink(
+          decoration: BoxDecoration(
+              gradient:
+                  LinearGradient(colors: [Colors.blue, Color(0XFF2978b5)]),
+              borderRadius: BorderRadius.circular(25)),
+          child: Container(
+            width: 200,
+            height: 50,
+            alignment: Alignment.center,
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
             ),
           ),
         ),

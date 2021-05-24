@@ -4,6 +4,7 @@ import 'package:demo_app/business_logic/view_models/add_item_viewmodel.dart';
 import 'package:demo_app/ui/pages/add/add_sales_page.dart';
 import 'package:demo_app/ui/pages/add/add_vitamin_page.dart';
 import 'package:demo_app/ui/theme/colors.dart';
+import 'package:demo_app/ui/widgets/add_button.dart';
 import 'package:demo_app/ui/widgets/filled_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -245,38 +246,9 @@ class AddItemPage extends StatelessWidget {
       );
     });
 
-    widgets.add(ElevatedButton(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Text(
-              'Add Vitamin',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          Icon(
-            Icons.add_rounded,
-            color: white,
-          ),
-        ],
-      ),
-      style: ElevatedButton.styleFrom(
-        shadowColor: Colors.black87,
-        elevation: 13,
-        primary: Color(0XFFf21170),
-        onPrimary: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: Colors.transparent),
-        ),
-      ),
-      onPressed: () {
+    widgets.add(AddButton(
+      title: 'Add Vitamin',
+      onClickAction: () {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -285,7 +257,6 @@ class AddItemPage extends StatelessWidget {
         );
       },
     ));
-
     return widgets;
   }
 
@@ -361,38 +332,9 @@ class AddItemPage extends StatelessWidget {
       );
     });
 
-    widgets.add(ElevatedButton(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Text(
-              'Add Sales',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          Icon(
-            Icons.add_rounded,
-            color: white,
-          ),
-        ],
-      ),
-      style: ElevatedButton.styleFrom(
-        shadowColor: Colors.black87,
-        elevation: 13,
-        primary: Color(0XFFf21170),
-        onPrimary: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: Colors.transparent),
-        ),
-      ),
-      onPressed: () {
+    widgets.add(AddButton(
+      title: 'Add Sales',
+      onClickAction: () {
         Navigator.push(
           context,
           MaterialPageRoute(

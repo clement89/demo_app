@@ -1,4 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:demo_app/business_logic/view_models/home_viewmodel.dart';
 import 'package:demo_app/business_logic/view_models/root_viewmodel.dart';
 import 'package:demo_app/ui/pages/add/add_item_page.dart';
 import 'package:demo_app/ui/pages/compare_page.dart';
@@ -22,6 +23,8 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _rootViewModel = Provider.of<RootViewModel>(context, listen: false);
+    final _homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
+    _homeViewModel.loadData();
 
     return Consumer<RootViewModel>(builder: (context, provider, child) {
       return Scaffold(
