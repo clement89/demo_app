@@ -95,7 +95,6 @@ class AddSalesPage extends StatelessWidget {
                 onClickAction: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    print('ok = $_salesList');
                     _viewModel.addSales(_salesList);
                     Navigator.pop(context);
                   }

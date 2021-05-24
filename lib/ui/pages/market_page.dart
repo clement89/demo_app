@@ -6,8 +6,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'fruit_list_page.dart';
 
-class SalesPage extends StatelessWidget {
-  const SalesPage({Key key}) : super(key: key);
+class MarketPage extends StatelessWidget {
+  const MarketPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,39 +25,45 @@ class SalesPage extends StatelessWidget {
             child: Center(
               child: Container(
                 child: SfCartesianChart(
-                  // Enables the legend
-                  title: ChartTitle(
-                    text: 'Fruit sales analysis',
-                    textStyle: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: red,
-                      letterSpacing: 0.5,
+                    // Enables the legend
+                    title: ChartTitle(
+                      text: 'Fruit sales and market analysis',
+                      textStyle: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: red,
+                        letterSpacing: 0.5,
+                      ),
                     ),
-                  ),
-                  legend: Legend(
-                    isVisible: true,
-                    borderColor: Colors.black26,
-                    borderWidth: 2,
-                  ),
-                  // Initialize category axis
-                  primaryXAxis: CategoryAxis(),
-                  series: <ChartSeries>[
-                    // Initialize line series
-                    LineSeries<SalesData, String>(
-                      dataSource: [
-                        // Bind data source
-                        SalesData('Jan', 35),
-                        SalesData('Feb', 28),
-                        SalesData('Mar', 34),
-                        SalesData('Apr', 32),
-                        SalesData('May', 40)
-                      ],
-                      xValueMapper: (SalesData sales, _) => sales.year,
-                      yValueMapper: (SalesData sales, _) => sales.sales,
-                    )
-                  ],
-                ),
+                    legend: Legend(
+                      isVisible: true,
+                      borderColor: Colors.black26,
+                      borderWidth: 2,
+                    ),
+                    // Initialize category axis
+                    primaryXAxis: CategoryAxis(),
+                    series: <CartesianSeries>[
+                      ColumnSeries<ChartData, String>(
+                          dataSource: [
+                            ChartData('Jan', 35),
+                            ChartData('Feb', 28),
+                            ChartData('Mar', 34),
+                            ChartData('Apr', 32),
+                            ChartData('May', 40)
+                          ],
+                          xValueMapper: (ChartData data, _) => data.x,
+                          yValueMapper: (ChartData data, _) => data.y),
+                      ColumnSeries<ChartData, String>(
+                          dataSource: [
+                            ChartData('Jan', 12),
+                            ChartData('Feb', 33),
+                            ChartData('Mar', 44),
+                            ChartData('Apr', 56),
+                            ChartData('May', 23)
+                          ],
+                          xValueMapper: (ChartData data, _) => data.x,
+                          yValueMapper: (ChartData data, _) => data.y),
+                    ]),
               ),
             ),
           ),

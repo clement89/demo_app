@@ -28,32 +28,12 @@ class AddItemViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void creteNewFruit() async {
+  Future creteNewFruit() async {
     isLoading = true;
     notifyListeners();
 
-    Map<String, dynamic> fruitJson = fruit.toJson();
-
-    List<Map<String, dynamic>> sales = [];
-    List<Map<String, dynamic>> vitamins = [];
-
-    print(fruitJson);
-
-    fruitJson['vitamins'].forEach((Vitamins element) {
-      vitamins.add(element.toJson());
-    });
-
-    fruitJson['sales'].forEach((Sales element) {
-      sales.add(element.toJson());
-    });
-
-    fruitJson['vitamins'] = vitamins;
-    fruitJson['sales'] = sales;
-
-    print(fruitJson);
-
     await _apiClient.createFruit(
-        body: fruitJson,
+        fruit: fruit,
         successCallBack: () {},
         errorCallback: (String error) {
           showErrorMessage(error);

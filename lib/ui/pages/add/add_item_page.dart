@@ -1,8 +1,8 @@
 import 'package:demo_app/business_logic/models/sales.dart';
 import 'package:demo_app/business_logic/models/vitamins.dart';
 import 'package:demo_app/business_logic/view_models/add_item_viewmodel.dart';
-import 'package:demo_app/ui/pages/add_sales_page.dart';
-import 'package:demo_app/ui/pages/add_vitamin_page.dart';
+import 'package:demo_app/ui/pages/add/add_sales_page.dart';
+import 'package:demo_app/ui/pages/add/add_vitamin_page.dart';
 import 'package:demo_app/ui/theme/colors.dart';
 import 'package:demo_app/ui/widgets/filled_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,13 +84,12 @@ class AddItemPage extends StatelessWidget {
                     ),
                     FilledButton(
                       title: 'DONE',
-                      onClickAction: () {
-                        // _accountViewModel.setInterests();
-                        // Navigator.pop(context);
+                      onClickAction: () async {
                         if (_formKey.currentState.validate()) {
                           viewModel.isLoading = true;
                           _formKey.currentState.save();
-                          _viewModel.creteNewFruit();
+                          await _viewModel.creteNewFruit();
+                          Navigator.pop(context);
                         }
                       },
                     ),
@@ -196,8 +195,6 @@ class AddItemPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Consumer<AddItemViewModel>(
             builder: (context, viewModel, child) {
-              print('reloading travel page - ');
-
               return Align(
                 alignment: Alignment.centerLeft,
                 child: Wrap(
@@ -314,8 +311,6 @@ class AddItemPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Consumer<AddItemViewModel>(
             builder: (context, viewModel, child) {
-              print('reloading travel page - ');
-
               return Align(
                 alignment: Alignment.centerLeft,
                 child: Wrap(

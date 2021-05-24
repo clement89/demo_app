@@ -1,7 +1,9 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:demo_app/business_logic/view_models/root_viewmodel.dart';
-import 'package:demo_app/ui/pages/add_item_page.dart';
+import 'package:demo_app/ui/pages/add/add_item_page.dart';
+import 'package:demo_app/ui/pages/compare_page.dart';
 import 'package:demo_app/ui/pages/home_page.dart';
+import 'package:demo_app/ui/pages/market_page.dart';
 import 'package:demo_app/ui/pages/sales_page.dart';
 import 'package:demo_app/ui/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +15,8 @@ class RootPage extends StatelessWidget {
   final List<Widget> pages = [
     HomePage(),
     SalesPage(),
+    MarketPage(),
+    ComparePage(),
   ];
 
   @override
@@ -53,8 +57,10 @@ class RootPage extends StatelessWidget {
 
   Widget getFooter(RootViewModel provider) {
     List<IconData> iconItems = [
-      Ionicons.md_home,
+      Ionicons.md_pie,
+      Ionicons.md_analytics,
       Ionicons.md_stats,
+      Ionicons.md_shuffle,
     ];
 
     return AnimatedBottomNavigationBar(
