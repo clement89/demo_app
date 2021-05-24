@@ -21,39 +21,7 @@ class AddItemPage extends StatelessWidget {
     _viewModel.initialize();
     return Scaffold(
       backgroundColor: lightBlue,
-      appBar: AppBar(
-        backgroundColor: white,
-        elevation: 3,
-        title: const Text(
-          'Add Item',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-            color: red,
-            letterSpacing: 1,
-          ),
-        ),
-        leading: Container(),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Cancel',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: blue,
-              ),
-            ),
-            style: ButtonStyle(
-              overlayColor:
-                  MaterialStateProperty.all(Colors.white.withOpacity(0.2)),
-            ),
-          )
-        ],
-      ),
+      appBar: _buildAppBar(context),
       body: SafeArea(
         child: Consumer<AddItemViewModel>(
           builder: (context, viewModel, child) => ModalProgressHUD(
@@ -101,6 +69,42 @@ class AddItemPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: white,
+      elevation: 3,
+      title: const Text(
+        'Add Item',
+        style: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          color: red,
+          letterSpacing: 1,
+        ),
+      ),
+      leading: Container(),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            'Cancel',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: blue,
+            ),
+          ),
+          style: ButtonStyle(
+            overlayColor:
+                MaterialStateProperty.all(Colors.white.withOpacity(0.2)),
+          ),
+        )
+      ],
     );
   }
 

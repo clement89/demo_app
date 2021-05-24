@@ -2,26 +2,23 @@ import 'package:demo_app/business_logic/models/fruit.dart';
 import 'package:demo_app/services/networking/web_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 class HomeViewModel extends ChangeNotifier {
-  final WebApiClient _apiClient = WebApiClient();
+  final WebApiClient _apiClient = WebApiClient(httpClient: http.Client());
   List<Fruit> fruitList = [];
   Fruit selectedFruit;
   String message = '';
 
-  void loadData() {
-    _apiClient.loadAllFruits(successCallBack: (List<Fruit> response) {
-      updateFruits(response);
-    }, errorCallback: (String error) {
-      showErrorMessage(error);
-    });
-  }
-
-  void updateFruits(List<Fruit> fruits) {
-    if (fruits.length > 0) {
-      selectedFruit = fruits.elementAt(0);
+  void loadData() async {
+    final apiResult = await _apiClient.loadAllFruits();
+    apiResult.fold((error) {}, (fruits) {
       fruitList = fruits;
-    }
+      if (fruitList.length > 0) {
+        selectedFruit = fruitList.elementAt(0);
+      }
+    });
+
     notifyListeners();
   }
 
@@ -30,15 +27,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   Future deleteFruit(Fruit item) async {
-    await _apiClient.deleteFruit(
-        id: item.id,
-        successCallBack: () {
-          fruitList.remove(item);
-          message = 'Successfully deleted!';
-        },
-        errorCallback: (String error) {
-          message = 'Error - ' + error;
-        });
+    message = await _apiClient.deleteFruit(id: item.id);
     notifyListeners();
   }
 }

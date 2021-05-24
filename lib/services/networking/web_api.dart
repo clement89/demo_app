@@ -1,109 +1,78 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:demo_app/business_logic/models/fruit.dart';
 import 'package:demo_app/business_logic/models/sales.dart';
 import 'package:demo_app/business_logic/models/vitamins.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class WebApiClient {
-  //Create single tone
-
-  WebApiClient._privateConstructor();
-  static final WebApiClient _instance = WebApiClient._privateConstructor();
-  factory WebApiClient() {
-    return _instance;
-  }
+  final http.Client httpClient;
+  WebApiClient({
+    @required this.httpClient,
+  }) : assert(httpClient != null);
 
   //Define base url
 
-  final _baseUrl = 'http://b06862888fd6.ngrok.io/api';
-  int timeOut = 15;
+  final String _baseUrl = 'http://e8111a28cbfb.ngrok.io/api';
+  final int timeOut = 15;
 
   //Define methods
 
   //Get...
-  Future<void> loadAllFruits(
-      {Function successCallBack, Function errorCallback}) async {
+  Future<Either<String, List<Fruit>>> loadAllFruits() async {
     try {
       final url = '$_baseUrl/fruits/';
-      final response = await http.get(Uri.parse(url),
-          headers: <String, String>{'Accept': 'application/json'}).timeout(
-        Duration(seconds: timeOut),
-        onTimeout: () {
-          errorCallback('Request timeout.');
-          return;
-        },
-      );
+      final response = await httpClient.get(Uri.parse(url),
+          headers: <String, String>{'Accept': 'application/json'});
+
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body);
-        successCallBack(_fruitList(parsed));
+        return Right(_fruitList(parsed));
       } else {
-        errorCallback('Unable to fetch data from the REST API');
+        return Left('Unable to fetch data from the REST API');
       }
     } on SocketException {
-      errorCallback('No internet connection');
+      return Left('No internet connection');
     }
   }
 
   //Create...
 
-  Future<void> createFruit({
-    Fruit fruit,
-    Function successCallBack,
-    Function errorCallback,
-  }) async {
+  Future<String> createFruit({Fruit fruit}) async {
     try {
       final url = '$_baseUrl/fruits/';
       final response = await http.post(Uri.parse(url),
           body: json.encode(encodeFruit(fruit)),
-          headers: <String, String>{
-            'Content-Type': 'application/json'
-          }).timeout(
-        Duration(seconds: timeOut),
-        onTimeout: () {
-          errorCallback('Request timeout.');
-          return;
-        },
-      );
+          headers: <String, String>{'Content-Type': 'application/json'});
       if (response.statusCode == 200) {
-        successCallBack();
+        return ('Success');
       } else {
-        errorCallback('Unable to fetch data from the REST API');
+        return ('Unable to fetch data from the REST API');
       }
     } on SocketException {
-      errorCallback('No internet connection');
+      return ('No internet connection');
     }
   }
 
   //Delete...
 
-  Future<void> deleteFruit({
-    int id,
-    Function successCallBack,
-    Function errorCallback,
-  }) async {
+  Future<String> deleteFruit({int id}) async {
     try {
       final url = '$_baseUrl/fruits/$id';
       final response = await http.delete(Uri.parse(url),
-          headers: <String, String>{
-            'Content-Type': 'application/json'
-          }).timeout(
-        Duration(seconds: timeOut),
-        onTimeout: () {
-          errorCallback('Request timeout.');
-          return;
-        },
-      );
+          headers: <String, String>{'Content-Type': 'application/json'});
 
       print('response.statusCode - ${response.statusCode}');
       if (response.statusCode == 204) {
-        successCallBack();
+        return ('Success');
       } else {
-        errorCallback('Unable to fetch data from the REST API');
+        return ('Unable to fetch data from the REST API');
       }
     } on SocketException {
-      errorCallback('No internet connection');
+      return ('No internet connection');
     }
   }
 
