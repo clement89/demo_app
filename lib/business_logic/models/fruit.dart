@@ -6,14 +6,14 @@ class Fruit {
   String name;
   List<Vitamins> vitamins;
   List<Data> sales;
-  List<Data> availability;
+  List<Data> availabilities;
 
   Fruit(
     this.id,
     this.name,
     this.vitamins,
     this.sales,
-    this.availability,
+    this.availabilities,
   );
   factory Fruit.fromJson(Map<String, dynamic> json) {
     return Fruit(
@@ -21,7 +21,7 @@ class Fruit {
       json['name'],
       json['vitamins'],
       json['sales'],
-      json['availability'],
+      json['availabilities'],
     );
   }
 
@@ -31,7 +31,7 @@ class Fruit {
       'name': name,
       'vitamins': vitamins,
       'sales': sales,
-      'availability': availability,
+      'availabilities': availabilities,
     };
   }
 }

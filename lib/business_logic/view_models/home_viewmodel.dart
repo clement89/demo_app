@@ -7,23 +7,32 @@ import 'package:http/http.dart' as http;
 class HomeViewModel extends ChangeNotifier {
   final WebApiClient _apiClient = WebApiClient(httpClient: http.Client());
   List<Fruit> fruitList = [];
-  Fruit selectedFruit;
   String message = '';
+  Fruit selectedFruit;
 
-  void loadData() async {
+  void loadData({Function errorHandler}) async {
     final apiResult = await _apiClient.loadAllFruits();
-    apiResult.fold((error) {}, (fruits) {
+    apiResult.fold((error) {
+      errorHandler(error);
+    }, (fruits) {
       fruitList = fruits;
-      if (fruitList.length > 0) {
-        updateSelectedFruit(fruitList.elementAt(0));
-      } else {
-        notifyListeners();
+      if (selectedFruit == null && fruitList.isNotEmpty) {
+        selectedFruit = fruitList.elementAt(0);
       }
+      if (fruitList.isEmpty) {
+        selectedFruit = null;
+      }
+      notifyListeners();
     });
   }
 
   void updateSelectedFruit(Fruit fruit) {
     selectedFruit = fruit;
+    notifyListeners();
+  }
+
+  void addFruit(Fruit fruit) {
+    fruitList.add(fruit);
     notifyListeners();
   }
 
@@ -33,6 +42,7 @@ class HomeViewModel extends ChangeNotifier {
 
   Future deleteFruit(Fruit item) async {
     message = await _apiClient.deleteFruit(id: item.id);
+    fruitList.remove(item);
     notifyListeners();
   }
 }

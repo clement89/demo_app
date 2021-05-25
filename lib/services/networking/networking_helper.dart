@@ -7,6 +7,8 @@ class NetworkingHelper {
 
   Fruit decodeFruit(Map<String, dynamic> fruitJson) {
     List<Data> sales = [];
+    List<Data> availabilities = [];
+
     List<Vitamins> vitamins = [];
     fruitJson['vitamins'].forEach((element) {
       vitamins.add(Vitamins.fromJson(element));
@@ -15,8 +17,13 @@ class NetworkingHelper {
       sales.add(Data.fromJson(element));
     });
 
+    fruitJson['availabilities'].forEach((element) {
+      availabilities.add(Data.fromJson(element));
+    });
+
     fruitJson['vitamins'] = vitamins;
     fruitJson['sales'] = sales;
+    fruitJson['availabilities'] = availabilities;
 
     return Fruit.fromJson(fruitJson);
   }
@@ -25,6 +32,7 @@ class NetworkingHelper {
     Map<String, dynamic> fruitJson = fruit.toJson();
 
     List<Map<String, dynamic>> sales = [];
+    List<Map<String, dynamic>> availabilities = [];
     List<Map<String, dynamic>> vitamins = [];
 
     fruitJson['vitamins'].forEach((Vitamins element) {
@@ -35,14 +43,21 @@ class NetworkingHelper {
       sales.add(element.toJson());
     });
 
+    fruitJson['availabilities'].forEach((Data element) {
+      availabilities.add(element.toJson());
+    });
+
     fruitJson['vitamins'] = vitamins;
     fruitJson['sales'] = sales;
+    fruitJson['availabilities'] = availabilities;
+
+    print(fruitJson);
 
     return fruitJson;
   }
 
   List<Fruit> fruitList(Map<String, dynamic> response) {
-    print('fruits json - $response');
+    // print('fruits json - $response');
 
     List<Fruit> fruitList = [];
     List<dynamic> fruitListJson = response['data'];

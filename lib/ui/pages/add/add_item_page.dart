@@ -1,6 +1,7 @@
 import 'package:demo_app/business_logic/models/sales.dart';
 import 'package:demo_app/business_logic/models/vitamins.dart';
 import 'package:demo_app/business_logic/view_models/add_item_viewmodel.dart';
+import 'package:demo_app/business_logic/view_models/home_viewmodel.dart';
 import 'package:demo_app/ui/pages/add/add_data_page.dart';
 import 'package:demo_app/ui/pages/add/add_vitamin_page.dart';
 import 'package:demo_app/ui/theme/colors.dart';
@@ -60,6 +61,10 @@ class AddItemPage extends StatelessWidget {
                           viewModel.isLoading = true;
                           _formKey.currentState.save();
                           await _viewModel.creteNewFruit();
+                          final _homeViewModel = Provider.of<HomeViewModel>(
+                              context,
+                              listen: false);
+                          _homeViewModel.addFruit(viewModel.fruit);
                           Navigator.pop(context);
                         }
                       },
@@ -313,7 +318,7 @@ class AddItemPage extends StatelessWidget {
                   children: _dataList(
                     data: isSale
                         ? viewModel.fruit.sales
-                        : viewModel.fruit.availability,
+                        : viewModel.fruit.availabilities,
                     context: context,
                     isSale: isSale,
                   ),

@@ -29,7 +29,7 @@ class AddItemViewModel extends ChangeNotifier {
     if (isSales) {
       fruit.sales = data;
     } else {
-      fruit.availability = data;
+      fruit.availabilities = data;
     }
     notifyListeners();
   }
@@ -39,7 +39,6 @@ class AddItemViewModel extends ChangeNotifier {
     notifyListeners();
 
     message = await _apiClient.createFruit(fruit: fruit);
-
     isLoading = false;
     notifyListeners();
   }

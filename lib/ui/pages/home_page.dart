@@ -46,7 +46,12 @@ class HomePage extends StatelessWidget {
           letterSpacing: 0.5,
         ),
       ),
-      legend: Legend(isVisible: true),
+      legend: Legend(
+        isVisible: true,
+        overflowMode: LegendItemOverflowMode.wrap,
+        borderColor: Colors.black26,
+        borderWidth: 2,
+      ),
       series: <CircularSeries>[
         // Render pie chart
         PieSeries<ChartData, String>(

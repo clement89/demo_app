@@ -7,6 +7,7 @@ import 'package:demo_app/ui/pages/home_page.dart';
 import 'package:demo_app/ui/pages/market_page.dart';
 import 'package:demo_app/ui/pages/sales_page.dart';
 import 'package:demo_app/ui/theme/colors.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -24,7 +25,9 @@ class RootPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _rootViewModel = Provider.of<RootViewModel>(context, listen: false);
     final _homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
-    _homeViewModel.loadData();
+    _homeViewModel.loadData(errorHandler: (String error) {
+      _showMessage(context, error);
+    });
 
     return Consumer<RootViewModel>(builder: (context, provider, child) {
       return Scaffold(
@@ -56,6 +59,18 @@ class RootPage extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
     });
+  }
+
+  _showMessage(BuildContext context, String message) {
+    Flushbar(
+      title: "Error",
+      message: message,
+      duration: Duration(seconds: 3),
+      icon: Icon(
+        Icons.error_outline_rounded,
+        color: Colors.white,
+      ),
+    )..show(context);
   }
 
   Widget getFooter(RootViewModel provider) {

@@ -15,7 +15,8 @@ class WebApiClient {
 
   //Define base url
 
-  final String _baseUrl = 'http://e8111a28cbfb.ngrok.io/api';
+  final String _baseUrl =
+      'https://0b3e39d6-8e08-4b48-a62e-7bbc9233245c.mock.pstmn.io/api';
   final NetworkingHelper _helper = NetworkingHelper();
 
   //Define methods
@@ -29,6 +30,7 @@ class WebApiClient {
 
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body);
+        // print(parsed);
         return Right(_helper.fruitList(parsed));
       } else {
         return Left('Unable to fetch data from the REST API');
@@ -44,6 +46,24 @@ class WebApiClient {
     try {
       final url = '$_baseUrl/fruits/';
       final response = await http.post(Uri.parse(url),
+          body: json.encode(_helper.encodeFruit(fruit)),
+          headers: <String, String>{'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        return ('Success');
+      } else {
+        return ('Unable to fetch data from the REST API');
+      }
+    } on SocketException {
+      return ('No internet connection');
+    }
+  }
+
+  //Edit
+
+  Future<String> edit({Fruit fruit, int id}) async {
+    try {
+      final url = '$_baseUrl/fruits/$id';
+      final response = await http.put(Uri.parse(url),
           body: json.encode(_helper.encodeFruit(fruit)),
           headers: <String, String>{'Content-Type': 'application/json'});
       if (response.statusCode == 200) {
