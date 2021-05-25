@@ -6,22 +6,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-List<Sales> _salesList;
+List<Data> _dataList;
 
-class AddSalesPage extends StatelessWidget {
+class AddDataPage extends StatelessWidget {
+  final isSales;
+  AddDataPage({@required this.isSales});
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final _viewModel = Provider.of<AddItemViewModel>(context, listen: false);
-    _salesList = [];
+    _dataList = [];
     return Scaffold(
       backgroundColor: lightBlue,
       appBar: AppBar(
         backgroundColor: white,
         elevation: 3,
-        title: const Text(
-          'Add Sales',
+        title: Text(
+          isSales ? 'Add Sales' : 'Availability',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w700,
@@ -52,36 +55,36 @@ class AddSalesPage extends StatelessWidget {
 
               _buildTextField(
                 title: 'JANUARY',
-                hintText: 'Enter the sales of January',
+                hintText: 'Enter the data of January',
                 onSave: (var value) {
-                  _salesList.add(Sales('January', int.parse(value)));
+                  _dataList.add(Data('January', int.parse(value)));
                 },
                 isDouble: true,
                 viewModel: _viewModel,
               ),
               _buildTextField(
                 title: 'FEBRUARY',
-                hintText: 'Enter the sales of February',
+                hintText: 'Enter the data of February',
                 onSave: (var value) {
-                  _salesList.add(Sales('February', int.parse(value)));
+                  _dataList.add(Data('February', int.parse(value)));
                 },
                 isDouble: true,
                 viewModel: _viewModel,
               ),
               _buildTextField(
                 title: 'MARCH',
-                hintText: 'Enter the sales of March',
+                hintText: 'Enter the data of March',
                 onSave: (var value) {
-                  _salesList.add(Sales('March', int.parse(value)));
+                  _dataList.add(Data('March', int.parse(value)));
                 },
                 isDouble: true,
                 viewModel: _viewModel,
               ),
               _buildTextField(
                 title: 'APRIL',
-                hintText: 'Enter the sales of April',
+                hintText: 'Enter the data of April',
                 onSave: (var value) {
-                  _salesList.add(Sales('April', int.parse(value)));
+                  _dataList.add(Data('April', int.parse(value)));
                 },
                 isDouble: true,
                 viewModel: _viewModel,
@@ -95,7 +98,7 @@ class AddSalesPage extends StatelessWidget {
                 onClickAction: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    _viewModel.addSales(_salesList);
+                    _viewModel.addData(data: _dataList, isSales: isSales);
                     Navigator.pop(context);
                   }
                 },

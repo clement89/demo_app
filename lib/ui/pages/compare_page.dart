@@ -29,8 +29,14 @@ class ComparePage extends StatelessWidget {
                     child: _buildChart(viewModel),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
+                  Text(
+                    'Comparing sales of different fruits.',
+                    style: TextStyle(
+                      color: Colors.black54,
+                    ),
+                  )
                 ],
               ),
       ),
@@ -73,7 +79,7 @@ class ComparePage extends StatelessWidget {
     return salesList;
   }
 
-  List<ChartData> _dataSource(List<Sales> sales) {
+  List<ChartData> _dataSource(List<Data> sales) {
     List<ChartData> dataList = [];
     sales.forEach((sales) {
       dataList.add(ChartData(sales.month, sales.value.toDouble()));

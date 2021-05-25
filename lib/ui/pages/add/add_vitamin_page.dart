@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Vitamins _vitamins;
+List<Vitamins> _dataList;
 
 class AddVitaminPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -14,7 +14,7 @@ class AddVitaminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _viewModel = Provider.of<AddItemViewModel>(context, listen: false);
-    _vitamins = Vitamins('', 0);
+    _dataList = [];
     return Scaffold(
       backgroundColor: lightBlue,
       appBar: AppBar(
@@ -49,20 +49,48 @@ class AddVitaminPage extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
+
               _buildTextField(
-                title: 'NAME',
-                hintText: 'Enter name of the fruit',
+                title: 'Vitamin A',
+                hintText: 'Enter value of Vitamin A',
                 onSave: (var value) {
-                  _vitamins.name = value;
+                  _dataList.add(Vitamins('Vitamin A', int.parse(value)));
                 },
-                isDouble: false,
+                isDouble: true,
                 viewModel: _viewModel,
               ),
               _buildTextField(
-                title: 'Value',
-                hintText: 'Enter the amount',
+                title: 'Vitamin B1',
+                hintText: 'Enter value of Vitamin B1',
                 onSave: (var value) {
-                  _vitamins.value = int.parse(value);
+                  _dataList.add(Vitamins('Vitamin B1', int.parse(value)));
+                },
+                isDouble: true,
+                viewModel: _viewModel,
+              ),
+              _buildTextField(
+                title: 'Vitamin B2',
+                hintText: 'Enter value of Vitamin B2',
+                onSave: (var value) {
+                  _dataList.add(Vitamins('Vitamin B2', int.parse(value)));
+                },
+                isDouble: true,
+                viewModel: _viewModel,
+              ),
+              _buildTextField(
+                title: 'Vitamin B6',
+                hintText: 'Enter value of Vitamin B6',
+                onSave: (var value) {
+                  _dataList.add(Vitamins('Vitamin B6', int.parse(value)));
+                },
+                isDouble: true,
+                viewModel: _viewModel,
+              ),
+              _buildTextField(
+                title: 'Vitamin C',
+                hintText: 'Enter value of Vitamin C',
+                onSave: (var value) {
+                  _dataList.add(Vitamins('Vitamin C', int.parse(value)));
                 },
                 isDouble: true,
                 viewModel: _viewModel,
@@ -76,7 +104,7 @@ class AddVitaminPage extends StatelessWidget {
                 onClickAction: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    _viewModel.addVitamin(_vitamins);
+                    _viewModel.addVitamin(_dataList);
                     Navigator.pop(context);
                   }
                 },

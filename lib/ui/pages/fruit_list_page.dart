@@ -9,6 +9,9 @@ import 'package:provider/provider.dart';
 class FruitListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
+    _homeViewModel.loadData();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: white,

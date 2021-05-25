@@ -1,7 +1,7 @@
 import 'package:demo_app/business_logic/models/sales.dart';
 import 'package:demo_app/business_logic/models/vitamins.dart';
 import 'package:demo_app/business_logic/view_models/add_item_viewmodel.dart';
-import 'package:demo_app/ui/pages/add/add_sales_page.dart';
+import 'package:demo_app/ui/pages/add/add_data_page.dart';
 import 'package:demo_app/ui/pages/add/add_vitamin_page.dart';
 import 'package:demo_app/ui/theme/colors.dart';
 import 'package:demo_app/ui/widgets/add_button.dart';
@@ -46,7 +46,9 @@ class AddItemPage extends StatelessWidget {
                     ),
                     _buildVitamins(context),
 
-                    _buildSales(context),
+                    _buildData(context: context, isSale: true),
+
+                    _buildData(context: context, isSale: false),
 
                     SizedBox(
                       height: 40,
@@ -250,21 +252,37 @@ class AddItemPage extends StatelessWidget {
       );
     });
 
-    widgets.add(AddButton(
-      title: 'Add Vitamin',
-      onClickAction: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AddVitaminPage(),
-          ),
-        );
-      },
-    ));
+    if (widgets.length == 0) {
+      widgets.add(AddButton(
+        title: 'Add Vitamin',
+        onClickAction: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddVitaminPage(),
+            ),
+          );
+        },
+      ));
+    } else {
+      widgets.add(AddButton(
+        title: 'Edit Vitamin',
+        onClickAction: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddVitaminPage(),
+            ),
+          );
+        },
+        iconData: Icons.edit,
+      ));
+    }
+
     return widgets;
   }
 
-  Widget _buildSales(BuildContext context) {
+  Widget _buildData({BuildContext context, bool isSale}) {
     return Column(
       children: [
         Padding(
@@ -272,7 +290,7 @@ class AddItemPage extends StatelessWidget {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'SALES',
+              isSale ? 'SALES' : 'AVAILABILITY',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -292,7 +310,13 @@ class AddItemPage extends StatelessWidget {
                   alignment: WrapAlignment.start,
                   spacing: 8.0, // gap between adjacent chips
                   runSpacing: 8.0, // gap between lines
-                  children: _salesList(viewModel.fruit.sales, context),
+                  children: _dataList(
+                    data: isSale
+                        ? viewModel.fruit.sales
+                        : viewModel.fruit.availability,
+                    context: context,
+                    isSale: isSale,
+                  ),
                 ),
               );
             },
@@ -302,9 +326,9 @@ class AddItemPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _salesList(List<Sales> sales, BuildContext context) {
+  List<Widget> _dataList({List<Data> data, BuildContext context, bool isSale}) {
     List<Widget> widgets = [];
-    sales.forEach((eachSale) {
+    data.forEach((eachData) {
       widgets.add(
         Chip(
           padding: EdgeInsets.all(10),
@@ -313,7 +337,7 @@ class AddItemPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                eachSale.month,
+                eachData.month,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -322,7 +346,7 @@ class AddItemPage extends StatelessWidget {
                 ),
               ),
               Text(
-                ' ' + eachSale.value.toString() + ' %',
+                ' ' + eachData.value.toString() + ' %',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -336,18 +360,36 @@ class AddItemPage extends StatelessWidget {
       );
     });
 
-    widgets.add(AddButton(
-      title: 'Add Sales',
-      onClickAction: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AddSalesPage(),
-          ),
-        );
-      },
-    ));
-
+    if (widgets.length == 0) {
+      widgets.add(AddButton(
+        title: isSale ? 'Add Sales' : 'Add Availability',
+        onClickAction: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddDataPage(
+                isSales: isSale,
+              ),
+            ),
+          );
+        },
+      ));
+    } else {
+      widgets.add(AddButton(
+        title: isSale ? 'Edit Sales' : 'Edit Availability',
+        onClickAction: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddDataPage(
+                isSales: isSale,
+              ),
+            ),
+          );
+        },
+        iconData: Icons.edit,
+      ));
+    }
     return widgets;
   }
 }

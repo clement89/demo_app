@@ -24,7 +24,13 @@ void main() {
   Future<Either<String, List<Fruit>>> mockData(bool status) async {
     if (status) {
       return Right([
-        Fruit(1, 'Apple', [Vitamins('Vitamin C', 12)], [Sales('January', 44)])
+        Fruit(1, 'Apple', [
+          Vitamins('Vitamin C', 12)
+        ], [
+          Data('January', 44),
+        ], [
+          Data('January', 44),
+        ])
       ]);
     } else {
       return Left('Unable to fetch data from the REST API');

@@ -13,20 +13,24 @@ class AddItemViewModel extends ChangeNotifier {
   final WebApiClient _apiClient = WebApiClient(httpClient: http.Client());
 
   void initialize() {
-    fruit = Fruit(0, '', [], []);
+    fruit = Fruit(0, '', [], [], []);
   }
 
   bool isNumeric(String value) {
     return double.tryParse(value) != null;
   }
 
-  void addVitamin(Vitamins vitamin) {
-    fruit.vitamins.add(vitamin);
+  void addVitamin(List<Vitamins> data) {
+    fruit.vitamins = data;
     notifyListeners();
   }
 
-  void addSales(List<Sales> sales) {
-    fruit.sales = sales;
+  void addData({List<Data> data, bool isSales}) {
+    if (isSales) {
+      fruit.sales = data;
+    } else {
+      fruit.availability = data;
+    }
     notifyListeners();
   }
 

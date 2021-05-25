@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 class AddButton extends StatelessWidget {
   final String title;
   final Function onClickAction;
+  final IconData iconData;
   AddButton({
     @required this.title,
     @required this.onClickAction,
+    this.iconData,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class AddButton extends StatelessWidget {
               ),
             ),
             Icon(
-              Icons.add_rounded,
+              iconData == null ? Icons.add_rounded : this.iconData,
               color: white,
             ),
           ],

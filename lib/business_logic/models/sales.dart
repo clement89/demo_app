@@ -1,13 +1,13 @@
-class Sales {
+class Data {
   String month;
   int value;
 
-  Sales(
+  Data(
     this.month,
     this.value,
   );
-  factory Sales.fromJson(Map<String, dynamic> json) {
-    return Sales(
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
       json['month'],
       json['value'],
     );
