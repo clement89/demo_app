@@ -30,7 +30,7 @@ class WebApiClient {
 
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body);
-        return Right(_fruitList(parsed));
+        return Right(fruitList(parsed));
       } else {
         return Left('Unable to fetch data from the REST API');
       }
@@ -114,7 +114,7 @@ class WebApiClient {
     return fruitJson;
   }
 
-  List<Fruit> _fruitList(Map<String, dynamic> response) {
+  List<Fruit> fruitList(Map<String, dynamic> response) {
     print('fruits json - $response');
 
     List<Fruit> fruitList = [];

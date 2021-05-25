@@ -53,18 +53,26 @@ class FruitListPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                     title: Text(
-                      '${fruit.name.toUpperCase()}',
+                      '${fruit.name}',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
-                        color: blue,
+                        color: Colors.black,
                         letterSpacing: 1,
                       ),
+                    ),
+                    leading: const Icon(
+                      Icons.tonality_rounded,
+                      size: 26,
                     ),
                     trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
                     ),
+                    onTap: () {
+                      viewModel.updateSelectedFruit(fruit);
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
                 secondaryActions: <Widget>[

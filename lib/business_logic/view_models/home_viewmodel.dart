@@ -15,10 +15,15 @@ class HomeViewModel extends ChangeNotifier {
     apiResult.fold((error) {}, (fruits) {
       fruitList = fruits;
       if (fruitList.length > 0) {
-        selectedFruit = fruitList.elementAt(0);
+        updateSelectedFruit(fruitList.elementAt(0));
+      } else {
+        notifyListeners();
       }
     });
+  }
 
+  void updateSelectedFruit(Fruit fruit) {
+    selectedFruit = fruit;
     notifyListeners();
   }
 
